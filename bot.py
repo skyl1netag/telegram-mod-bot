@@ -6,7 +6,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
-TOKEN = 'TELEGRAM_TOKEN'
+TOKEN = os.environ.get('TELEGRAM_TOKEN')  # ✅ ПРАВИЛЬНО!
 WARNS_FILE = 'warns.json'
 
 # Загрузка предупреждений из файла
@@ -114,4 +114,5 @@ def main():
 if __name__ == '__main__':
 
     main()
+
 
