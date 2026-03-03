@@ -1,7 +1,8 @@
 import os
-import threading
+import asyncio
 from flask import Flask
 from bot import main as run_bot
+import threading
 
 app = Flask(__name__)
 
@@ -13,14 +14,24 @@ def home():
 def health():
     return "OK", 200
 
-def start_bot():
-    print("Запускаем бота...")
+def run_bot_in_thread():
+    """Запуск бота в отдельном потоке с собственным event loop"""
+    # Создаем новый event loop для потока
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    
+    # Запускаем бота
+    print("Запускаем бота в отдельном потоке...")
     run_bot()
+    
+    # Закрываем loop после завершения
+    loop.close()
 
 if __name__ == '__main__':
     # Запускаем бота в отдельном потоке
-    thread = threading.Thread(target=start_bot)
-    thread.start()
+    bot_thread = threading.Thread(target=run_bot_in_thread, daemon=True)
+    bot_thread.start()
+    print("Бот запущен в фоновом потоке")
     
     # Запускаем Flask сервер
     port = int(os.environ.get('PORT', 10000))
