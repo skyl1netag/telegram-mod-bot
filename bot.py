@@ -103,7 +103,7 @@ async def warn(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text(f'Не удалось забанить: {e}')
 
 def main():
-    app = Application.builder().token(TOKEN).build()
+    application = Application.builder().token(TOKEN).build()
     app.add_handler(CommandHandler('start', start))
     app.add_handler(CommandHandler('ban', ban))
     app.add_handler(CommandHandler('mute', mute))
@@ -111,4 +111,5 @@ def main():
     app.run_polling()
 
 if __name__ == '__main__':
+
     main()
