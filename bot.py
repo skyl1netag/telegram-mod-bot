@@ -1,5 +1,6 @@
 import logging
 import json
+import os
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 
@@ -104,12 +105,13 @@ async def warn(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     application = Application.builder().token(TOKEN).build()
-    app.add_handler(CommandHandler('start', start))
-    app.add_handler(CommandHandler('ban', ban))
-    app.add_handler(CommandHandler('mute', mute))
-    app.add_handler(CommandHandler('warn', warn))
-    app.run_polling()
+    application.add_handler(CommandHandler('start', start))
+    application.add_handler(CommandHandler('ban', ban))
+    application.add_handler(CommandHandler('mute', mute))
+    application.add_handler(CommandHandler('warn', warn))
+    application.run_polling()
 
 if __name__ == '__main__':
 
     main()
+
